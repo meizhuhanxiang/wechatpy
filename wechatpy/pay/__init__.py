@@ -115,7 +115,7 @@ class WeChatPay(object):
         # 商户证书
         if self.mch_cert and self.mch_key:
             kwargs['cert'] = (self.mch_cert, self.mch_key)
-
+        kwargs['verify'] = False
         res = requests.request(
             method=method,
             url=url,
