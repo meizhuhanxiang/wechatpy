@@ -109,14 +109,13 @@ class WeChatOrder(BaseWeChatPayAPI):
         :param nonce_str: 可选，随机字符串，默认自动生成
         :return: 签名
         """
-        data = {
-            'appid': self.appid,
-            'partnerid': self.mch_id,
-            'prepayid': prepay_id,
-            'package': 'Sign=WXPay',
-            'timestamp': timestamp or to_text(int(time.time())),
-            'noncestr': nonce_str or random_string(32)
-        }
+         data = {
+            'appId': self.appid,
+            'timeStamp': timestamp or to_text(int(time.time())),
+            'nonceStr': nonce_str or random_string(32),
+            'package': 'prepay_id=%s' % prepay_id,
+            'signType': 'MD5',
+         }
         sign = calculate_signature(data, self._client.api_key)
-        data['sign'] = sign
+        data['paySign'] = sign
         return data
